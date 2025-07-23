@@ -8,26 +8,23 @@
       <q-input
         filled
         v-model="name"
-        label="ชื่อ-สกุล"
-        hint="ชื่อและนามสกุล"
+        label="Your name *"
+        hint="Name and surname"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'กรุณาพิมพ์ชื่อ']"
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
-
       <q-input
         filled
         type="number"
         v-model="age"
-        label="อายุของคุณ *"
+        label="Your age *"
         lazy-rules
         :rules="[
-          val => val !== null && val !== '' || 'กรุณาพิมพ์อายุของคุณ',
-          val => val > 0 && val < 100 || 'กรุณาใส่อายุที่สมจริง'
+          val => val !== null && val !== '' || 'Please type your age',
+          val => val > 0 && val < 100 || 'Please type a real age'
         ]"
       />
-
-      <q-toggle v-model="accept" label="ฉันยอมรับเงื่อนไขและข้อตกลง" />
-
+      <q-toggle v-model="accept" label="I accept the license and terms" />
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
@@ -47,19 +44,17 @@ export default {
     const name = ref(null)
     const age = ref(null)
     const accept = ref(false)
-
     return {
       name,
       age,
       accept,
-
       onSubmit () {
         if (accept.value !== true) {
           $q.notify({
             color: 'red-5',
             textColor: 'white',
             icon: 'warning',
-            message: 'กรุณายอมรับเงื่อนไขก่อนส่งแบบฟอร์ม'
+            message: 'You need to accept the license and terms first'
           })
         }
         else {
@@ -67,11 +62,10 @@ export default {
             color: 'green-4',
             textColor: 'white',
             icon: 'cloud_done',
-            message: 'ส่งข้อมูลเรียบร้อยแล้ว'
+            message: 'Submitted'
           })
         }
       },
-
       onReset () {
         name.value = null
         age.value = null
